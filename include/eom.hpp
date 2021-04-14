@@ -7,7 +7,7 @@ using namespace mprop;
 
 // State vector is position, quaternion, velocity, and angular rate
 Matrix<double, 13, 1> eom(const Matrix<double, 13, 1> state, const Vector3d F,
-                          const Vector3d M) {                   
+                          const Vector3d M) {
   // Extracting Vectors from State
   Vector3d r = state.block<3, 1>(0, 0);
   Vector4d q = state.block<4, 1>(3, 0);
