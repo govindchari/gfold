@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "dense": "cpp",
+        "iostream": "cpp",
+        "locale": "cpp",
+        "string": "cpp",
+        "ostream": "cpp"
+    }
+}
