@@ -9,5 +9,5 @@ template <typename T> T rk4(T (*f)(T state), T x, double h) {
   auto k2 = f(x + half * h * k1);
   auto k3 = f(x + half * h * k2);
   auto k4 = f(x + h * k3);
-  return (sixth) * h * (k1 + two * k2 + two * k3 + k4);
+  return x + (sixth) * h * (k1 + two * k2 + two * k3 + k4);
 }
