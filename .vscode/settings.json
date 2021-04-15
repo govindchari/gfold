@@ -4,7 +4,7 @@
         "iostream": "cpp",
         "locale": "cpp",
         "string": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "C_Cpp.default.cppStandard": "c++14"
     },
-    "C_Cpp.default.cppStandard": "c++14"
 }

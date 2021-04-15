@@ -1,5 +1,5 @@
 #include "../include/eom1.hpp"
-#include "../include/ode4.hpp"
+#include "../include/rk4.hpp"
 #include "../include/utilities.hpp"
 #include <iostream>
 using namespace Eigen;
@@ -9,7 +9,7 @@ int main() {
   double x = 1.0;
   double h = 0.1;
   while (x < 100) {
-    x = ode4(&eom1, x, h);
+    x = rk4(&eom1, x, h);
     cout << x << endl;
   }
 }
