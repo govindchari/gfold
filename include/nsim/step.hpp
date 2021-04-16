@@ -1,5 +1,5 @@
 #pragma once
-#include "../lib/eigen/Eigen/Dense"
+#include "../../lib/eigen/Eigen/Dense"
 using namespace Eigen;
 
 // Uses RK4 to step the simulation forward in time by h
@@ -13,5 +13,5 @@ T step(T (*f)(T state, Vector3d force, Vector3d moment), T x, double h,
   auto k2 = f(x + half * h * k1, F, M);
   auto k3 = f(x + half * h * k2, F, M);
   auto k4 = f(x + h * k3, F, M);
-  return x + (sixth)*h * (k1 + two * k2 + two * k3 + k4);
+  return x + (sixth) * h * (k1 + two * k2 + two * k3 + k4);
 }
