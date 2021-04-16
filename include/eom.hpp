@@ -16,7 +16,7 @@ Matrix<double, 13, 1> eom(const Matrix<double, 13, 1> state, const Vector3d F,
 
   // Constructing quaternion representation of w
   Vector4d w_q;
-  w_q << 0, w(0, 0), w(1, 0), w(2, 0);
+  w_q << 0, w;
 
   Vector4d qd = 0.5 * hamilton(q, w_q);
   Vector3d vd = F / mass;
@@ -25,8 +25,8 @@ Matrix<double, 13, 1> eom(const Matrix<double, 13, 1> state, const Vector3d F,
       (M(1, 0) + (I3 - I1) * w(2, 0) * w(0, 0)) / I2,
       (M(2, 0) + (I1 - I2) * w(0, 0) * w(1, 0)) / I3;
 
-  Matrix<double, 13, 1> stated;
-  stated << v, qd, vd, wd;
+  Matrix<double, 13, 1> state_d;
+  state_d << v, qd, vd, wd;
 
-  return stated;
+  return state_d;
 }

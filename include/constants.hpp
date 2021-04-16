@@ -1,3 +1,4 @@
+#pragma once
 namespace mprop {
 static constexpr double mass = 1.0;
 static constexpr double I1 = 0.1;
