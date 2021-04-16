@@ -5,7 +5,15 @@
 using namespace Eigen;
 using namespace mprop;
 
-// State vector is position, quaternion, velocity, and angular rate
+/**
+ * @brief Applied Newton's Laws and Euler's Equations to generate the state
+ * derivative
+ *
+ * @param state State Vector
+ * @param F Net Force
+ * @param M Net Moment
+ * @return Derivative of State Vector
+ */
 Matrix<double, 13, 1> eom(const Matrix<double, 13, 1> state, const Vector3d F,
                           const Vector3d M) {
   // Extracting Vectors from State

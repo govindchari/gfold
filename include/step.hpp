@@ -1,3 +1,4 @@
+#pragma once
 #include "../lib/eigen/Eigen/Dense"
 using namespace Eigen;
 
