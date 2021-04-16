@@ -3,7 +3,6 @@
 #include "../include/utilities.hpp"
 
 using namespace Eigen;
-using namespace mprop;
 
 /**
  * @brief Applied Newton's Laws and Euler's Equations to generate the state
@@ -27,11 +26,11 @@ Matrix<double, 13, 1> eom(const Matrix<double, 13, 1> state, const Vector3d F,
   w_q << 0, w;
 
   Vector4d qd = 0.5 * hamilton(q, w_q);
-  Vector3d vd = F / mass;
+  Vector3d vd = F / mprop::mass;
   Vector3d wd;
-  wd << (M(0, 0) + (I2 - I3) * w(1, 0) * w(2, 0)) / I1,
-      (M(1, 0) + (I3 - I1) * w(2, 0) * w(0, 0)) / I2,
-      (M(2, 0) + (I1 - I2) * w(0, 0) * w(1, 0)) / I3;
+  wd << (M(0, 0) + (mprop::I2 - mprop::I3) * w(1, 0) * w(2, 0)) / mprop::I1,
+      (M(1, 0) + (mprop::I3 - mprop::I1) * w(2, 0) * w(0, 0)) / mprop::I2,
+      (M(2, 0) + (mprop::I1 - mprop::I2) * w(0, 0) * w(1, 0)) / mprop::I3;
 
   Matrix<double, 13, 1> state_d;
   state_d << v, qd, vd, wd;
