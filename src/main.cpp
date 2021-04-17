@@ -1,15 +1,27 @@
-#include "../include/eom1.hpp"
-#include "../include/rk4.hpp"
-#include "../include/utilities.hpp"
+#include "nsim/constants.hpp"
+#include "nsim/eom.hpp"
+#include "nsim/step.hpp"
+#include "gnc/AttitudeController.hpp"
+#include "gnc/utilities.hpp"
 #include <iostream>
-using namespace Eigen;
-using namespace std;
 
 int main() {
-  double x = 1.0;
-  double h = 0.1;
-  while (x < 100) {
-    x = rk4(&eom1, x, h);
-    cout << x << endl;
-  }
+  Eigen::Matrix<double, 13, 1> z;
+  Eigen::Vector3d F;
+  Eigen::Vector3d M;
+  Eigen::Vector3d M_des;
+  Eigen::Vector4d q;
+  Eigen::Vector3d w;
+  Eigen::Vector3d q_int;
+
+  z << 1, 2, 3, 1, 0, 0, 0, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1;
+  F << 0, 0, 0;
+  M << 0, 0, 0;
+  z = step(&eom, z, sim::h, F, M);
+  q = z.block<4,1>(3,0);
+  w = z.block<3,1>(7,0);
+  q_int = z.block<3,1>(10,0);
+
+  M_des = AttitudeController(q,w,q_int);
+  std::cout << M_des << std::endl;
 }
