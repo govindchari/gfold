@@ -17,7 +17,7 @@ int main() {
   z << 1, 2, 3, 1, 0, 0, 0, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1;
   F << 0, 0, 0;
   M << 0, 0, 0;
-  z = step(&eom, z, sim::h, F, M);
+  //z = step(&eom, z, sim::h, F, M);
   q = z.block<4,1>(3,0);
   w = z.block<3,1>(7,0);
   q_int = z.block<3,1>(10,0);
