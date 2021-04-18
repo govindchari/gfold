@@ -1,7 +1,7 @@
 #pragma once
 #include "Eigen/Dense"
 /**
- * @brief Computes the desired moment on the vehicle
+ * @brief Computes the desired moment on the vehicle and updates q_int
  *
  * @param q Orientation quaternion
  * @param w Vehicle Angular Velocity
