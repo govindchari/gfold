@@ -1,5 +1,5 @@
 #pragma once
-#include "../../lib/eigen/Eigen/Dense"
+#include "Eigen/Dense"
 using namespace Eigen;
 
 template <typename T>
