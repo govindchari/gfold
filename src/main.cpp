@@ -17,7 +17,7 @@ int main() {
   Vector3d F_des;
   Vector3d q_int;
   Vector3d pos_int;
-  std::vector<Matrix<double, state_size, 1>> data;
+  std::vector<Matrix<double, sim::num_states_6DOF, 1>> data;
 
   q_int << 0,0,0;
   pos_int << 0,0,0;
