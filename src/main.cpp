@@ -1,30 +1,35 @@
 #include "nsim/constants.hpp"
+#include "gnc/constants.hpp"
 #include "nsim/eom.hpp"
 #include "nsim/step.hpp"
 #include "gnc/AttitudeController.hpp"
 #include "gnc/PositionController.hpp"
+#include "nsim/SaveData.hpp"
 #include "gnc/utilities.hpp"
 #include <iostream>
+#include <Eigen/StdVector>
 
 int main() {
-  Eigen::Matrix<double, 13, 1> z;
-  Eigen::Vector3d F;
-  Eigen::Vector3d M;
-  Eigen::Vector3d M_des;
-  Eigen::Vector3d F_des;
-  Eigen::Vector3d q_int;
-  Eigen::Vector3d pos_int;
 
+  // Initial Conditions
+  Matrix<double, 13, 1> z;
+  Vector3d M_des;
+  Vector3d F_des;
+  Vector3d q_int;
+  Vector3d pos_int;
+  std::vector<Matrix<double, state_size, 1>> data;
 
-  z << 1, 2, 3, 1, 0, 0, 0, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1;
-  F << 0, 0, 0;
-  M << 0, 0, 0;
   q_int << 0,0,0;
   pos_int << 0,0,0;
 
-  M_des = AttitudeController(z.block<4,1>(3,0), z.block<3,1>(10,0), q_int);
-  F_des = PositionController(z.block<3,1>(0,0), z.block<3,1>(7,0), pos_int);
-  z = step(&eom, z, sim::h, F, M);
+  z << 10, 20, 300, 1, 0, 0, 0, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1;
 
-  std::cout << F_des << std::endl;
+  while (z(2,0) >= 0) {
+    M_des = AttitudeController(z.block<4,1>(3,0), z.block<3,1>(10,0), q_int);
+    F_des = PositionController(z.block<3,1>(0,0), z.block<3,1>(7,0), pos_int);
+    z = step(&eom, z, sim::h, F_des, M_des);
+    // Stores state to data vector
+    data.push_back(z);
+  }
+  SaveData(data);
 }
