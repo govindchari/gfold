@@ -1,6 +1,6 @@
 #pragma once
-#include "../nsim/constants.hpp"
-#include "../gnc/utilities.hpp"
+#include "nsim/constants.hpp"
+#include "gnc/utilities.hpp"
 
 using namespace Eigen;
 
@@ -13,7 +13,7 @@ using namespace Eigen;
  * @param M Net Moment
  * @return Derivative of State Vector
  */
-Matrix<double, 13, 1> eom(const Matrix<double, 13, 1> state, const Vector3d F,
+Matrix<double, sim::num_states_6DOF, 1> eom(const Matrix<double, sim::num_states_6DOF, 1> state, const Vector3d F,
                           const Vector3d M) {
   // Extracting Vectors from State
   Vector3d r = state.block<3, 1>(0, 0);
@@ -26,13 +26,15 @@ Matrix<double, 13, 1> eom(const Matrix<double, 13, 1> state, const Vector3d F,
   w_q << 0, w;
 
   Vector4d qd = 0.5 * hamilton(q, w_q);
-  Vector3d vd = F / mprop::mass;
+  Vector3d vd = F / vprop::m_dry;
   Vector3d wd;
-  wd << (M(0, 0) + (mprop::I2 - mprop::I3) * w(1, 0) * w(2, 0)) / mprop::I1,
-      (M(1, 0) + (mprop::I3 - mprop::I1) * w(2, 0) * w(0, 0)) / mprop::I2,
-      (M(2, 0) + (mprop::I1 - mprop::I2) * w(0, 0) * w(1, 0)) / mprop::I3;
+  wd << (M(0, 0) + (vprop::I2 - vprop::I3) * w(1, 0) * w(2, 0)) / vprop::I1,
+      (M(1, 0) + (vprop::I3 - vprop::I1) * w(2, 0) * w(0, 0)) / vprop::I2,
+      (M(2, 0) + (vprop::I1 - vprop::I2) * w(0, 0) * w(1, 0)) / vprop::I3;
 
-  Matrix<double, 13, 1> state_d;
+
+  Matrix<double, sim::num_states_6DOF, 1> state_d;
+
   state_d << v, qd, vd, wd;
 
   return state_d;
