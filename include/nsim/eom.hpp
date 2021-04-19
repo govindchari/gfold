@@ -1,6 +1,6 @@
 #pragma once
-#include "nsim/constants.hpp"
 #include "gnc/utilities.hpp"
+#include "nsim/constants.hpp"
 
 using namespace Eigen;
 
@@ -13,8 +13,9 @@ using namespace Eigen;
  * @param M Net Moment
  * @return Derivative of State Vector
  */
-Matrix<double, sim::num_states_6DOF, 1> eom(const Matrix<double, sim::num_states_6DOF, 1> state, const Vector3d F,
-                          const Vector3d M) {
+Matrix<double, sim::num_states_6DOF, 1>
+eom(const Matrix<double, sim::num_states_6DOF, 1> &state, const Vector3d &F,
+    const Vector3d &M) {
   // Extracting Vectors from State
   Vector3d r = state.block<3, 1>(0, 0);
   Vector4d q = state.block<4, 1>(3, 0);
@@ -31,7 +32,6 @@ Matrix<double, sim::num_states_6DOF, 1> eom(const Matrix<double, sim::num_states
   wd << (M(0, 0) + (vprop::I2 - vprop::I3) * w(1, 0) * w(2, 0)) / vprop::I1,
       (M(1, 0) + (vprop::I3 - vprop::I1) * w(2, 0) * w(0, 0)) / vprop::I2,
       (M(2, 0) + (vprop::I1 - vprop::I2) * w(0, 0) * w(1, 0)) / vprop::I3;
-
 
   Matrix<double, sim::num_states_6DOF, 1> state_d;
 
