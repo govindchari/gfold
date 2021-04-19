@@ -5,7 +5,7 @@
 using namespace Eigen;
 
 /**
- * @brief Computes the state's derivative
+ * @brief Computes the state's derivative for a 6DOF simulation
  * 
  * @param state position, velocity, orientation quaternion, angular rate, mass
  * @param F Net Force on Vehicle
