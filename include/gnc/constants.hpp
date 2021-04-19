@@ -11,3 +11,5 @@ static constexpr double K_p = 1.0;
 static constexpr double K_i = 0;
 static constexpr double K_d = 0;
 } // namespace Position
+
+static constexpr int state_size = 13;
