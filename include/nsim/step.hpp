@@ -13,5 +13,5 @@ T step(T (*f)(T const &state, const Vector3d &force, const Vector3d &moment, con
   auto k2 = f(x + half * sim::h * k1, F, M, Th);
   auto k3 = f(x + half * sim::h * k2, F, M, Th);
   auto k4 = f(x + sim::h * k3, F, M, Th);
-  return x + (sixth)* sim::h * (k1 + two * k2 + two * k3 + k4);
+  return x + (sixth) * sim::h * (k1 + two * k2 + two * k3 + k4);
 }
