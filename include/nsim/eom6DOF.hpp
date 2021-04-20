@@ -13,8 +13,8 @@ using namespace Eigen;
  * @param T Magnitude of Thrust Vector
  * @return Derivative of state
  */
-Matrix<double, sim::num_states_6DOF, 1>
-eom_6DOF(const Matrix<double, sim::num_states_6DOF, 1> &state, const Vector3d &F,
+static Matrix<double, sim::num_states_6DOF, 1>
+eom6DOF(const Matrix<double, sim::num_states_6DOF, 1> &state, const Vector3d &F,
     const Vector3d &M, const double &T) {
   // Extracting Vectors from State
   Vector3d r = state.block<3, 1>(0, 0);

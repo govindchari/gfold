@@ -1,3 +1,4 @@
+#pragma once
 #include "nsim/constants.hpp"
 #include <Eigen/StdVector>
 #include <fstream>

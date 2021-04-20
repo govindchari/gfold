@@ -1,3 +1,4 @@
+#pragma once
 namespace FlightComputer {
 static constexpr double dt = 0.1;
 }
