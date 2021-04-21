@@ -42,6 +42,18 @@ static Vector3d rotate_frame(const Vector4d &q, const Vector3d &v) {
     Vector4d v_q;
     v_q << 0, v;
     result_q = hamilton(conjugate(q), hamilton(v_q, q));
-    result << result_q(1, 0), result_q(2, 0), result_q(3, 0);
+    result << result_q(1,0), result_q(2,0), result_q(3,0);
     return result;
+}
+
+static Vector3d cross(const Vector3d &u, const Vector3d &v) {
+    Vector3d result;
+    result << u(1,0)*v(2,0)-u(2,0)*v(1,0),
+              u(2,0)*v(0,0)-u(0,0)*v(2,0),
+              u(0,0)*v(1,0)-u(1,0)*v(0,0);
+    return result;
+}
+
+static double dot(const Vector3d &u, const Vector3d &v) {
+    return (u(0,0)*v(0,0)+u(1,0)*v(1,0)+u(2,0)*v(2,0));
 }
