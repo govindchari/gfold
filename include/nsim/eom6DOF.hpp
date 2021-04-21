@@ -1,5 +1,6 @@
 #pragma once
 #include "gnc/utilities.hpp"
+#include "gnc/constants.hpp"
 #include "nsim/constants.hpp"
 
 using namespace Eigen;
