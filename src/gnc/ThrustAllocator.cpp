@@ -16,7 +16,8 @@ void ThrustAllocator(Vector3d &F_des, Vector3d &M_des, EngineActuation &actuatio
   std::cout << T_b << std::endl;
   std::cout << "" << std::endl;
 
-  nhat = cross(T_g, T_b) / cross(T_g, T_b).norm();
+  nhat = cross(T_g, T_b);
+  nhat.normalize();
   theta = asin(dot(T_g, T_b) / pow(F_des.norm(), 2));
 
   actuation.throttle = F_des.norm();
