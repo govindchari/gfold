@@ -1,7 +1,7 @@
 # Nsim
 
-This repo houses a 6DOF simulation for a thrust vector controlled lander as well as the my recreation of JPL's G-FOLD
-algorithm. This project is the GNC and simulation development necessary to fly Nova and is my final project for ECE5555:
+Nsim is a 6DOF simulation for a thrust vector controlled lander and houses my recreation of JPL's G-FOLD
+algorithm. This repo contains the GNC and simulations necessary to fly Nova and is my final project for ECE5555:
 Stochastic Controls and Estimation.
 
 This repository contains two main parts 
