@@ -16,8 +16,8 @@ Vector3d AttitudeController(const Vector3d &T_des, const Vector4d &q, const Vect
 
   // Constucting desired orientation quaternion
   T_body << 0, 0, T_des.norm();
-  theta = acos(dot(T_body, T_des) / pow(T_des.norm(), 2));
-  nhat = cross(T_body, T_des);
+  theta = acos(dot(T_des, T_body) / pow(T_des.norm(), 2));
+  nhat = cross(T_des, T_body);
   nhat.normalize();
   q_des << cos(theta/2), nhat(0,0)*sin(theta/2), nhat(1,0)*sin(theta/2), nhat(2,0)*sin(theta/2);
   v_des = q_des.block<3,1>(1,0);
