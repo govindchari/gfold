@@ -1,4 +1,4 @@
-close all;clc;
+close all;clc;clear
 data=csvread('data.csv');
 t=data(:,1);
 r=data(:,2:4);
