@@ -14,4 +14,4 @@ using namespace Eigen;
  * @return Vector3d 
  */
 Vector3d AttitudeController(const Vector3d &T_des, const Vector4d &q, const Vector3d &w,
-                            Vector3d &q_int);
+                            Vector3d &q_int, Vector4d &q_des);
