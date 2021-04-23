@@ -29,7 +29,7 @@ eom6DOF(const Matrix<double, sim::num_states_6DOF, 1> &state, const Vector3d &F,
   w_q << 0, w;
 
   // Computing derivatives
-  Vector4d qd = 0.5 * hamilton(q, w_q);
+  Vector4d qd = conjugate(0.5 * hamilton(q, w_q));
   Vector3d vd = F / m;
   Vector3d wd;
   wd << (M(0, 0) + (vprop::I2 - vprop::I3) * w(1, 0) * w(2, 0)) / vprop::I1,
