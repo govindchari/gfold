@@ -15,7 +15,13 @@ void ThrustAllocator(Vector3d &T_des, Vector3d &M_des,
 
   nhat = cross(T_gimbal, T_body);
   nhat.normalize();
-  theta = acos(dot(T_gimbal, T_body) / pow(T_des.norm(), 2));
+
+  // Dealing with numeric issue of an acos argument greater than unity
+  if (dot(T_gimbal, T_body) / pow(T_des.norm(), 2)>=1) {
+    theta=0;
+  } else {
+    theta = acos(dot(T_gimbal, T_body) / pow(T_des.norm(), 2));
+  }
 
   actuation.throttle = T_des.norm();
   actuation.axis = nhat;
