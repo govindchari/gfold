@@ -16,4 +16,4 @@ struct ForcesMoments {
  * @param q Orientation quaternion
  * @param forces_moments This field is mutated to contain the net force and moment
  */
-void GenerateForcesMoments(EngineActuation actuation, Vector4d &q, ForcesMoments &forces_moments);
+void GenerateForcesMoments(EngineActuation actuation, const Vector4d &q, const double &m, ForcesMoments &forces_moments);
