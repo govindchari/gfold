@@ -28,5 +28,5 @@ static constexpr double K_d = 1.0;
 namespace Position {
 static constexpr double K_p = 0.01;
 static constexpr double K_i = 0;
-static constexpr double K_d = 1.0;
+static constexpr double K_d = 0.0;
 } // namespace Position
