@@ -23,7 +23,7 @@ void run6DOF(Matrix<double, sim::num_states_6DOF, 1> z) {
     GenerateForcesMoments(actuation, q, z(13,0), forces_moments);
     z = step(&eom6DOF, z, forces_moments.force, forces_moments.moment, actuation.throttle);
     info << z, T_des, M_des, actuation.throttle, actuation.axis, actuation.angle, forces_moments.force, forces_moments.moment, q_des;
-
+    
     // Stores state to data vector
     data.push_back(info);
   }
