@@ -7,3 +7,4 @@ CMakeCache.txt
 CPackConfig.cmake
 CPackSourceConfig.cmake
 CMakeFiles/
+makefile
