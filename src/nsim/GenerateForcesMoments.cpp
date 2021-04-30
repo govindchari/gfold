@@ -27,7 +27,7 @@ void GenerateForcesMoments(EngineActuation actuation, const Vector4d &q, const d
         b_q_g << cos(angle/2), -axis(0,0)*sin(angle/2), -axis(1,0)*sin(angle/2), -axis(2,0)*sin(angle/2);
         T_body = rotate_frame(b_q_g, T_gimbal);
     }
-    r << 0, 0, -vprop::l;
+    r << 0, 0, -massprop::l;
     grav << 0, 0, environment::g;
     T_inertial = rotate_frame(conjugate(q), T_body);
 

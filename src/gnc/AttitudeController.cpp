@@ -22,7 +22,7 @@ Vector3d AttitudeController(const Vector3d &T_des, const Vector4d &q, const Vect
 
   // The signs are pluses because the orientation quaternion indicates the direction to 
   //rotate to go from body to inertial
-  M_des =  Attitude::K_p * (v-v_des) + Attitude::K_i * q_int - Attitude::K_d * w;
+  M_des =  attitude::K_p * (v-v_des) + attitude::K_i * q_int - attitude::K_d * w;
 
   // Update q_int
   q_int += (v-v_des) * FlightComputer::dt;

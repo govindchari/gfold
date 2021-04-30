@@ -32,10 +32,10 @@ eom6DOF(const Matrix<double, sim::num_states_6DOF, 1> &state, const Vector3d &F,
   Vector4d qd = conjugate(0.5 * hamilton(q, w_q));
   Vector3d vd = F / m;
   Vector3d wd;
-  wd << (M(0, 0) + (vprop::I2 - vprop::I3) * w(1, 0) * w(2, 0)) / vprop::I1,
-      (M(1, 0) + (vprop::I3 - vprop::I1) * w(2, 0) * w(0, 0)) / vprop::I2,
-      (M(2, 0) + (vprop::I1 - vprop::I2) * w(0, 0) * w(1, 0)) / vprop::I3;
-  double md = -T / (vprop::Isp * environment::g0);
+  wd << (M(0, 0) + (massprop::I2 - massprop::I3) * w(1, 0) * w(2, 0)) / massprop::I1,
+      (M(1, 0) + (massprop::I3 - massprop::I1) * w(2, 0) * w(0, 0)) / massprop::I2,
+      (M(2, 0) + (massprop::I1 - massprop::I2) * w(0, 0) * w(1, 0)) / massprop::I3;
+  double md = -T / (propulsion::Isp * environment::g0);
 
   // Assembling state derivative
   Matrix<double, sim::num_states_6DOF, 1> state_d;

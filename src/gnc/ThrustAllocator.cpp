@@ -8,8 +8,8 @@ void ThrustAllocator(Vector3d &T_des, Vector3d &M_des,
   double theta;
 
   T_gimbal << 0, 0, T_des.norm();
-  double T_x = -M_des(1, 0) / vprop::l;
-  double T_y = M_des(0, 0) / vprop::l;
+  double T_x = -M_des(1, 0) / massprop::l;
+  double T_y = M_des(0, 0) / massprop::l;
   double T_z = sqrt(pow(T_des.norm(), 2) - pow(T_x, 2) - pow(T_y, 2));
   T_body << T_x, T_y, T_z;
 
@@ -28,13 +28,13 @@ void ThrustAllocator(Vector3d &T_des, Vector3d &M_des,
   actuation.angle = theta;
 
   // Saturation block
-  if (actuation.throttle > vprop::T_max) {
-    actuation.throttle = vprop::T_max;
+  if (actuation.throttle > propulsion::T_max) {
+    actuation.throttle = propulsion::T_max;
   }
-  if (actuation.throttle < vprop::T_min) {
-    actuation.throttle = vprop::T_min;
+  if (actuation.throttle < propulsion::T_min) {
+    actuation.throttle = propulsion::T_min;
   }
-  if (actuation.angle > vprop::theta_max) {
-    actuation.angle = vprop::theta_max;
+  if (actuation.angle > attitude::theta_max) {
+    actuation.angle = attitude::theta_max;
   }
 }
