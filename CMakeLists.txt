@@ -17,6 +17,7 @@ add_executable(nsim
     src/main.cpp
     src/gnc/AttitudeController.cpp
     src/gnc/PositionController.cpp
+    src/gnc/FixedTOF.cpp
     src/gnc/ThrustAllocator.cpp
     src/nsim/GenerateForcesMoments.cpp
     src/nsim/SaveData.cpp
