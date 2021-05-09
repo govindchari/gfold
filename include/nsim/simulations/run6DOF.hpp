@@ -3,7 +3,7 @@
 #include "Eigen/Dense"
 
 #include "gnc/AttitudeController.hpp"
-#include "gnc/PositionController.hpp"
+#include "gnc/FreeTOF.hpp"
 #include "gnc/ThrustAllocator.hpp"
 #include "nsim/GenerateForcesMoments.hpp"
 #include "nsim/eom6DOF.hpp"
