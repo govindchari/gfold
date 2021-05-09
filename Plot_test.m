@@ -21,7 +21,7 @@ zlabel('z (m)')
 
 title('Out of Plane Divert Maneuver')
 
-xlim([0 limx])
-ylim([0 limy])
-zlim([0 limz])
+%xlim([0 limx])
+%ylim([0 limy])
+%zlim([0 limz])
 grid on

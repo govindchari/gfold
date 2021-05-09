@@ -16,8 +16,8 @@ include_directories("lib/")
 add_executable(nsim
     src/main.cpp
     src/gnc/AttitudeController.cpp
-    src/gnc/PositionController.cpp
     src/gnc/FixedTOF.cpp
+    src/gnc/FreeTOF.cpp
     src/gnc/ThrustAllocator.cpp
     src/nsim/GenerateForcesMoments.cpp
     src/nsim/SaveData.cpp
