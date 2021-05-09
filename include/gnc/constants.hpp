@@ -1,6 +1,6 @@
 #pragma once
 namespace FlightComputer {
-static constexpr double dt = 1;
+static constexpr double dt = 0.5;
 }
 namespace massprop {
 static constexpr double m_dry = 1500.0;
@@ -31,4 +31,5 @@ static constexpr double pointing_max = 25.0 * (M_PI / 180.0);
 } // namespace attitude
 namespace position {
 static constexpr double glideslope = 4.0*(M_PI/180);
+static constexpr double tolerance = 0.1;
 } // namespace position
