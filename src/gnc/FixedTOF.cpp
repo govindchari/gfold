@@ -1,42 +1,35 @@
 #include "gnc/FixedTOF.hpp"
+#include <iostream>
 
-void FixedTOF(const Vector3d &r0, const Vector3d &v0, const double &tof, const double &m0, FixedTOFData &data) {
-    MatrixXd x0(6, 1);
-    MatrixXd xT(6, 1);
-    MatrixXd c(1,6);
-    MatrixXd S(2,6);
-    MatrixXd A(6, 6);
-    MatrixXd B(6, 3);
-    MatrixXd G(6, 1);
+void FixedTOF(const Vector3d &r0, const Vector3d &v0, const double &tof,
+              const double &m0, FixedTOFData &data) {
+  MatrixXd x0(6, 1);
+  MatrixXd xT(6, 1);
+  MatrixXd c(1, 6);
+  MatrixXd S(2, 6);
+  MatrixXd A(6, 6);
+  MatrixXd B(6, 3);
+  MatrixXd G(6, 1);
 
-    double a = 1.0 / (propulsion::Isp * environment::g0);
-    double rho1 = propulsion::T_min;
-    double rho2 = propulsion::T_max;
-    double gs = position::glideslope;
-    double dt = 0.5;
-    double g = environment::g;
-    int time_horizon = (tof/dt);
-    double mt = 2000;
-    double tvc = attitude::pointing_max;
-    double mu1;
-    double mu2;
-    double z0;
+  double a = propulsion::alph;
+  double rho1 = propulsion::T_min;
+  double rho2 = propulsion::T_max;
+  double gs = position::glideslope;
+  double dt = FlightComputer::dt;
+  double g = environment::g;
+  int time_horizon = (int) (tof / dt);
+  //double mt = m0;
+  double tvc = attitude::pointing_max;
+  double mu1;
+  double mu2;
+  double z0;
 
-  A << 1, 0, 0, dt, 0, 0,
-       0, 1, 0, 0, dt, 0,
-       0, 0, 1, 0, 0, dt,
-       0, 0, 0, 1, 0, 0, 
-       0, 0, 0, 0, 1, 0,
-       0, 0, 0, 0, 0, 1;
-  B << 0.5*dt*dt, 0, 0,
-       0, 0.5*dt*dt, 0,
-       0, 0, 0.5*dt*dt,
-       dt, 0, 0, 
-       0, dt, 0,
-       0, 0, dt;
-  G << 0, 0, -0.5*g*dt*dt, 0, 0, -g*dt;
-  S << 1, 0, 0, 0, 0, 0,
-       0, 1, 0, 0, 0, 0;
+  A << 1, 0, 0, dt, 0, 0, 0, 1, 0, 0, dt, 0, 0, 0, 1, 0, 0, dt, 0, 0, 0, 1, 0,
+      0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1;
+  B << 0.5 * dt * dt, 0, 0, 0, 0.5 * dt * dt, 0, 0, 0, 0.5 * dt * dt, dt, 0, 0,
+      0, dt, 0, 0, 0, dt;
+  G << 0, 0, -0.5 * g * dt * dt, 0, 0, -g * dt;
+  S << 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0;
   c << 0, 0, -tan(M_PI_2 - gs), 0, 0, 0;
   x0 << r0, v0;
   xT << 0, 0, 0, 0, 0, 0;
@@ -54,28 +47,30 @@ void FixedTOF(const Vector3d &r0, const Vector3d &v0, const double &tof, const d
   socp.addConstraint(equalTo(z(0), log(m0)));
 
   // Dynamics
-  for (int k=0; k<T; k++) {
-    socp.addConstraint(equalTo(x.col(k+1), par(A) * x.col(k) + par(B) * u.col(k) + par(G)));
+  for (int k = 0; k < T; k++) {
+    socp.addConstraint(
+        equalTo(x.col(k + 1), par(A) * x.col(k) + par(B) * u.col(k) + par(G)));
     socp.addConstraint(equalTo(z(k + 1), z(k) - a * s(k) * dt));
   }
 
   // State and Input Constraints
-  for (int k=0; k<T+1; k++) {
-    z0 = log(mt - (a * rho2 * (k) * dt));
-    mu1 = rho1*exp(-z0);
-    mu2 = rho2*exp(-z0);
+  for (int k = 0; k < T + 1; k++) {
+    z0 = log(m0 - (a * rho2 * (k) * dt));
+    mu1 = rho1 * exp(-z0);
+    mu2 = rho2 * exp(-z0);
 
     socp.addConstraint(lessThan(u.col(k).norm(), s(k)));
-    socp.addConstraint(lessThan(mu1 * (1.0-(z(k)-z0)), s(k)));
+    socp.addConstraint(lessThan(mu1 * (1.0 - (z(k) - z0)), s(k)));
     socp.addConstraint(lessThan(s(k), mu2 * (1.0 - (z(k) - z0))));
-    socp.addConstraint(lessThan(log(mt - a * rho2 * k * dt), z(k)));
-    socp.addConstraint(lessThan(z(k), log(mt - a * rho1 * k * dt)));
-    socp.addConstraint(lessThan((par(S)*x.col(k)).norm(), -par(c) * x.col(k)));
+    socp.addConstraint(lessThan(log(m0 - a * rho2 * k * dt), z(k)));
+    socp.addConstraint(lessThan(z(k), log(m0 - a * rho1 * k * dt)));
+    socp.addConstraint(
+        lessThan((par(S) * x.col(k)).norm(), -par(c) * x.col(k)));
     socp.addConstraint(greaterThan(z(k), 0));
     socp.addConstraint(greaterThan(x.col(k)(2), 0));
-    socp.addConstraint(greaterThan(u.col(k)(2), s(k)*cos(tvc)));
+    socp.addConstraint(greaterThan(u.col(k)(2), s(k) * cos(tvc)));
   }
-  
+
   // Cost
   socp.addCostTerm(-z(T));
 
@@ -85,13 +80,16 @@ void FixedTOF(const Vector3d &r0, const Vector3d &v0, const double &tof, const d
   // Solve problem and show solver output
   const bool verbose = false;
   solver.solve(verbose);
-
-  auto x_sol = eval(x); 
+  auto x_sol = eval(x);
   auto u_sol = eval(u);
   auto s_sol = eval(s);
   auto z_sol = eval(z);
 
   data.x_sol = x_sol;
   data.u_sol = u_sol;
-  data.m_final = z_sol(T);
+  data.m_final = exp(z_sol(T));
+
+  if (!(solver.getExitCode() == 0 || solver.getExitCode() == 10)) {
+    data.m_final = massprop::m_dry + massprop::m_fuel;
+  }
 }
