@@ -87,6 +87,7 @@ void FixedTOF(const Vector3d &r0, const Vector3d &v0, const double &tof,
 
   data.x_sol = x_sol;
   data.u_sol = u_sol;
+  data.z_sol = z_sol;
   data.m_final = exp(z_sol(T));
 
   if (!(solver.getExitCode() == 0 || solver.getExitCode() == 10)) {

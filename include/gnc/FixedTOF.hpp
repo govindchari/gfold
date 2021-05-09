@@ -13,6 +13,7 @@ using namespace Eigen;
 struct FixedTOFData {
   MatrixXd x_sol;
   MatrixXd u_sol;
+  VectorXd z_sol;
   double m_final;
 };
 
