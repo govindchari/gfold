@@ -29,7 +29,7 @@ void GenerateForcesMoments(EngineActuation actuation, const Vector4d &q, const d
     }
     r << 0, 0, -massprop::l;
     grav << 0, 0, environment::g;
-    T_inertial = rotate_frame(conjugate(q), T_body);
+    T_inertial = rotate_frame((q), T_body);
 
     // Computing net inertial force and net moment
     F_inertial = T_inertial - m * grav;
