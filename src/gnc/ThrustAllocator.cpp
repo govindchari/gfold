@@ -1,5 +1,4 @@
 #include "gnc/ThrustAllocator.hpp"
-#include <iostream>
 
 void ThrustAllocator(Vector3d &T_des, Vector3d &M_des,
                             EngineActuation &actuation) {

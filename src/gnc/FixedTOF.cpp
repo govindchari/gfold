@@ -1,5 +1,4 @@
 #include "gnc/FixedTOF.hpp"
-#include <iostream>
 
 void FixedTOF(const Vector3d &r0, const Vector3d &v0, const double &tof,
               const double &m0, FixedTOFData &data) {

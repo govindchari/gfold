@@ -1,5 +1,4 @@
 #include "nsim/GenerateForcesMoments.hpp"
-#include <iostream>
 
 void GenerateForcesMoments(EngineActuation actuation, const Vector4d &q, const double &m, ForcesMoments &forces_moments) {
     // Pulling data from struct
