@@ -1,4 +1,5 @@
 #include "gnc/ThrustAllocator.hpp"
+#include <iostream>
 
 void ThrustAllocator(Vector3d &T_des, Vector3d &M_des,
                             EngineActuation &actuation) {
@@ -8,19 +9,23 @@ void ThrustAllocator(Vector3d &T_des, Vector3d &M_des,
   double theta;
 
   T_gimbal << 0, 0, T_des.norm();
-  double T_x = -M_des(1, 0) / massprop::l;
+  double T_x = - M_des(1, 0) / massprop::l;
   double T_y = M_des(0, 0) / massprop::l;
   double T_z = sqrt(pow(T_des.norm(), 2) - pow(T_x, 2) - pow(T_y, 2));
   T_body << T_x, T_y, T_z;
-
-  nhat = cross(T_gimbal, T_body);
-  nhat.normalize();
-
+  
   // Dealing with numeric issue of an acos argument greater than unity
-  if (dot(T_gimbal, T_body) / pow(T_des.norm(), 2)>=1) {
-    theta=0;
+  if (dot(T_gimbal, T_body) / pow(T_des.norm(), 2) >= 1.0) {
+    theta = 0;
   } else {
     theta = acos(dot(T_gimbal, T_body) / pow(T_des.norm(), 2));
+  }
+
+  if (theta == 0) {
+    nhat << 0, 0, 0;
+  } else {
+    nhat = cross(T_gimbal, T_body);
+    nhat.normalize();
   }
 
   actuation.throttle = T_des.norm();
