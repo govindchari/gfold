@@ -21,4 +21,7 @@ Vector3d FreeTOF(const Vector3d &r0, const Vector3d &v0, const double &m0, doubl
         }
         i+=FlightComputer::dt;
     }
+    Vector3d debug;
+    debug << 69, 69, 69;
+    return debug;
 }
