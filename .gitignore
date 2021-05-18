@@ -8,7 +8,6 @@ CPackConfig.cmake
 CPackSourceConfig.cmake
 CMakeFiles/
 compile_commands.json
-nsim
 makefile
 pos
 u
