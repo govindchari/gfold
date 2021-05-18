@@ -1,5 +1,7 @@
 #pragma once
 #include "Eigen/Dense"
+#include <random>
+#include <cmath>
 using namespace Eigen;
 /**
  * @brief Returns quaternion conjugate of input quaternion
@@ -56,4 +58,11 @@ static Vector3d cross(const Vector3d &u, const Vector3d &v) {
 
 static double dot(const Vector3d &u, const Vector3d &v) {
     return (u(0,0)*v(0,0)+u(1,0)*v(1,0)+u(2,0)*v(2,0));
+}
+
+static double random(double mean, double stdev) {
+    std::random_device rd{};
+    std::mt19937 gen{rd()};
+    std::normal_distribution<> d{mean,stdev};
+    return d(gen);
 }
