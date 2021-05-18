@@ -26,11 +26,11 @@ static constexpr double alph = 1.0 / (propulsion::Isp * environment::g0);
 namespace attitude {
 static constexpr double K_p = massprop::I1;
 static constexpr double K_i = 0;
-static constexpr double K_d = 0.6*K_p;
+static constexpr double K_d = 0.6 * K_p;
 static constexpr double theta_max = 15.0 * (M_PI / 180.0);
 static constexpr double pointing_max = 25.0 * (M_PI / 180.0);
 } // namespace attitude
 namespace position {
-static constexpr double glideslope = 4.0*(M_PI/180);
-static constexpr double tolerance = 0.01;
+static constexpr double glideslope = 4.0 * (M_PI/180);
+static constexpr double tolerance = 0.5;
 } // namespace position
