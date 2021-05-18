@@ -6,6 +6,7 @@
 #include "gnc/FreeTOF.hpp"
 #include "gnc/ThrustAllocator.hpp"
 #include "nsim/GenerateForcesMoments.hpp"
+#include "nsim/ProcessNoise.hpp"
 #include "nsim/eom6DOF.hpp"
 #include "nsim/step.hpp"
 #include "nsim/SaveData.hpp"

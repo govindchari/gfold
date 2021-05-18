@@ -34,12 +34,13 @@ void run6DOF(Matrix<double, sim::num_states_6DOF, 1> z) {
     ThrustAllocator(T_des, M_des, actuation);
     for (int i = 1; i <= FlightComputer::dt / sim::h; i++) {
       GenerateForcesMoments(actuation, q, z(13,0), forces_moments);
+      ProcessNoise(forces_moments.force, forces_moments.moment);
       z = step(&eom6DOF, z, forces_moments.force, forces_moments.moment, actuation.throttle);
       state_forces_moments << z, forces_moments.force, forces_moments.moment;
       sim_data.push_back(state_forces_moments);
     }
     info << T_des, M_des, actuation.throttle, actuation.axis, actuation.angle, q_des;
-    
+
     // Stores state to data vector
     fc_data.push_back(info);
   }
