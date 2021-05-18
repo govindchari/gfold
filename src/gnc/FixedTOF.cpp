@@ -17,7 +17,6 @@ void FixedTOF(const Vector3d &r0, const Vector3d &v0, const double &tof,
   double dt = FlightComputer::dt;
   double g = environment::g;
   int time_horizon = (int) (tof / dt);
-  //double mt = m0;
   double tvc = attitude::pointing_max;
   double mu1;
   double mu2;
@@ -36,14 +35,17 @@ void FixedTOF(const Vector3d &r0, const Vector3d &v0, const double &tof,
   OptimizationProblem socp;
   size_t T = time_horizon;
   VectorX z = socp.addVariable("z", T + 1);
+  Scalar q = socp.addVariable("q");
   MatrixX x = socp.addVariable("x", 6, T + 1);
   MatrixX u = socp.addVariable("u", 3, T + 1);
   VectorX s = socp.addVariable("s", T + 1);
 
   // Initial and Terminal Constraints
   socp.addConstraint(equalTo(x.col(0), par(x0)));
-  socp.addConstraint(equalTo(x.col(T), par(xT)));
+  socp.addConstraint(lessThan(x.col(T)(2), 0.4));
+  socp.addConstraint(lessThan(sqrt(x.col(T)(3)*x.col(T)(3)+x.col(T)(4)*x.col(T)(4)+x.col(T)(5)*x.col(T)(5)), 1.0));
   socp.addConstraint(equalTo(z(0), log(m0)));
+
 
   // Dynamics
   for (int k = 0; k < T; k++) {
@@ -57,21 +59,22 @@ void FixedTOF(const Vector3d &r0, const Vector3d &v0, const double &tof,
     z0 = log(m0 - (a * rho2 * (k) * dt));
     mu1 = rho1 * exp(-z0);
     mu2 = rho2 * exp(-z0);
-
+    socp.addConstraint(greaterThan(q, x.col(T).norm()));
     socp.addConstraint(lessThan(u.col(k).norm(), s(k)));
     socp.addConstraint(lessThan(mu1 * (1.0 - (z(k) - z0)), s(k)));
     socp.addConstraint(lessThan(s(k), mu2 * (1.0 - (z(k) - z0))));
     socp.addConstraint(lessThan(log(m0 - a * rho2 * k * dt), z(k)));
     socp.addConstraint(lessThan(z(k), log(m0 - a * rho1 * k * dt)));
-    socp.addConstraint(
-        lessThan((par(S) * x.col(k)).norm(), -par(c) * x.col(k)));
+    if (r0(2,0) >= 200.0){
+      socp.addConstraint(lessThan((par(S) * x.col(k)).norm(), -par(c) * x.col(k)));
+    }
     socp.addConstraint(greaterThan(z(k), 0));
     socp.addConstraint(greaterThan(x.col(k)(2), 0));
     socp.addConstraint(greaterThan(u.col(k)(2), s(k) * cos(tvc)));
   }
 
   // Cost
-  socp.addCostTerm(-z(T));
+  socp.addCostTerm(-z(T) + 100.0 * q);
 
   // Create and initialize the solver instance.
   ecos::ECOSSolver solver(socp);
