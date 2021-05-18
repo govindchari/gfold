@@ -20,6 +20,7 @@ add_executable(nsim
     src/gnc/FreeTOF.cpp
     src/gnc/ThrustAllocator.cpp
     src/nsim/GenerateForcesMoments.cpp
+    src/nsim/ProcessNoise.cpp
     src/nsim/SaveData.cpp
     src/nsim/simulations/run6DOF.cpp
     )
