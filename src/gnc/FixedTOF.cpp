@@ -76,7 +76,7 @@ void FixedTOF(const Vector3d &r0, const Vector3d &v0, const double &tof,
   }
 
   // Cost
-  socp.addCostTerm(-z(T) + 0.0001 * q);
+  socp.addCostTerm(-z(T) + 0.001 * q);
 
   // Create and initialize the solver instance.
   ecos::ECOSSolver solver(socp);

@@ -23,6 +23,7 @@ add_executable(nsim
     src/nsim/ProcessNoise.cpp
     src/nsim/SaveData.cpp
     src/nsim/simulations/run6DOF.cpp
+    src/nsim/simulations/MonteCarlo.cpp
     )
 
 set(ENABLE_OSQP TRUE)

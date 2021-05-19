@@ -54,8 +54,8 @@ zmax = 2500;
 %zlim([zmin zmax])
 hold on
 plot(r(:,1), r(:,2),'color','black')
-plot3(xmax*ones(1,length(r)),r(:,2),r(:,3),'color','black')
-plot3(r(:,1),ymax*ones(1,length(r)),r(:,3),'color','black')
+%plot3(xmax*ones(1,length(r)),r(:,2),r(:,3),'color','black')
+%plot3(r(:,1),ymax*ones(1,length(r)),r(:,3),'color','black')
 xlabel('X Distance (m)','interpreter','latex')
 ylabel('Y Distance (m)','interpreter','latex')
 zlabel('Z Distance (m)','interpreter','latex')

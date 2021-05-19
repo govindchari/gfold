@@ -1,5 +1,6 @@
 #include "nsim/simulations/run6DOF.hpp"
 #include <iostream>
+#include <fstream>
 
 void run6DOF(Matrix<double, sim::num_states_6DOF, 1> z) {
 
@@ -46,4 +47,10 @@ void run6DOF(Matrix<double, sim::num_states_6DOF, 1> z) {
   }
   SaveData(fc_data);
   SaveData(sim_data);
+
+  std::ofstream MonteCarlo;
+  MonteCarlo.open("MonteCarlo.csv", std::ios_base::app);
+  MonteCarlo << sim_data[sim_data.size()-1](0,0) << ", " << sim_data[sim_data.size()-1](1,0) << "," << std::endl;
+  std::cout << sim_data[sim_data.size()-1](0,0) << ", " << sim_data[sim_data.size()-1](1,0) << "," << std::endl;
+  MonteCarlo.close();
 }

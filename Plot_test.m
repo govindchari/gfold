@@ -5,9 +5,15 @@ z=csvread('z');
 
 m_actual=exp(z);
 
-limx = 3000;
-limy = 2500;
+limx = 500;
+limy = 1000;
 limz = 3500;
+
+for i=1:length(m_actual)
+    T(:,i) = m_actual(i)*u(:,i);
+    T_norm(i) = norm(T(:,1));
+end
+
 
 figure(20)
 plot3(pos(1,:), pos(2,:), pos(3,:), 'linewidth',2)
@@ -25,11 +31,13 @@ xlabel('x (m)')
 ylabel('y (m)')
 zlabel('z (m)')
 
-xlim([-2500 0])
-ylim([-100 700])
-zlim([0 2000])
+xlim([-600 500])
+ylim([-500 1000])
+zlim([0 3000])
+axis equal
 
 title('Out of Plane Divert Maneuver')
+legend('Trajectory')
 
 figure(21)
 plot(m_actual)
