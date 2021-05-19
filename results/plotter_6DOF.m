@@ -49,17 +49,17 @@ ymin = 0;
 ymax = 700;
 zmin = 0;
 zmax = 2500;
-%xlim([xmin xmax])
-%ylim([ymin ymax])
-%zlim([zmin zmax])
+xlim([xmin xmax])
+ylim([ymin ymax])
+zlim([zmin zmax])
 hold on
 plot(r(:,1), r(:,2),'color','black')
-%plot3(xmax*ones(1,length(r)),r(:,2),r(:,3),'color','black')
-%plot3(r(:,1),ymax*ones(1,length(r)),r(:,3),'color','black')
+plot3(xmax*ones(1,length(r)),r(:,2),r(:,3),'color','black')
+plot3(r(:,1),ymax*ones(1,length(r)),r(:,3),'color','black')
 xlabel('X Distance (m)','interpreter','latex')
 ylabel('Y Distance (m)','interpreter','latex')
 zlabel('Z Distance (m)','interpreter','latex')
-title('3D Vehicle Trajectory','interpreter','latex')
+title('6DOF MPC with Disturbances','interpreter','latex')
 grid on
 axis equal
 
@@ -194,9 +194,13 @@ grid on
 %Throttle vs Time
 figure(9)
 plot(ts,throttle,'Linewidth',2)
+hold on
+yline(164400)
+yline(411000)
 title('Thrust Magnitude Over Time','interpreter','latex')
 xlabel('Time (s)','interpreter','latex')
 ylabel('Thrust (N)', 'interpreter', 'latex')
+legend('Throttle','Lower Throttle Bound','Upper Throttle Bound')
 grid on
 
 %TVC Angle vs Time

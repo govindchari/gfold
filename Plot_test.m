@@ -2,6 +2,7 @@ clc
 u=csvread('u');
 pos=csvread('pos');
 z=csvread('z');
+mc = csvread('MonteCarlo.csv');
 
 m_actual=exp(z);
 
@@ -20,7 +21,7 @@ plot3(pos(1,:), pos(2,:), pos(3,:), 'linewidth',2)
 hold on
 quiver3(pos(1,:), pos(2,:), pos(3,:), u(1,:), u(2,:), u(3,:))
 hold on
-plot3(r(:,1),r(:,2),r(:,3),'Linewidth',2)
+%plot3(r(:,1),r(:,2),r(:,3),'Linewidth',2)
 grid on
 
 plot(pos(1,:), pos(2,:),'color','black')
@@ -42,4 +43,13 @@ legend('Trajectory')
 figure(21)
 plot(m_actual)
 
+figure(22)
+scatter(mc(:,1),mc(:,2),'*')
+axis equal
+%xlim([-10 10])
+%ylim([-10 10])
+xlabel('x (m)')
+ylabel('y (m)')
+
+title('Monte-Carlo Landing Locations')
 grid on

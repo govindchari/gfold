@@ -6,7 +6,6 @@ void run6DOF(Matrix<double, sim::num_states_6DOF, 1> z) {
 
   Matrix<double, 15, 1> info;
   Matrix<double, sim::num_states_6DOF + 6, 1> state_forces_moments;
-
   EngineActuation actuation;
   ForcesMoments forces_moments;
   Vector4d q;
@@ -48,9 +47,11 @@ void run6DOF(Matrix<double, sim::num_states_6DOF, 1> z) {
   SaveData(fc_data);
   SaveData(sim_data);
 
+  if (sim_data[sim_data.size()-1](0,0) > -100000) {
   std::ofstream MonteCarlo;
   MonteCarlo.open("MonteCarlo.csv", std::ios_base::app);
   MonteCarlo << sim_data[sim_data.size()-1](0,0) << ", " << sim_data[sim_data.size()-1](1,0) << "," << std::endl;
   std::cout << sim_data[sim_data.size()-1](0,0) << ", " << sim_data[sim_data.size()-1](1,0) << "," << std::endl;
   MonteCarlo.close();
+  }
 }
