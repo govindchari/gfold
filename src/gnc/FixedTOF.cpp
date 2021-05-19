@@ -54,18 +54,20 @@ void FixedTOF(const Vector3d &r0, const Vector3d &v0, const double &tof,
     socp.addConstraint(equalTo(z(k + 1), z(k) - a * s(k) * dt));
   }
 
+  socp.addConstraint(greaterThan(q, sqrt(x.col(T)(0)*x.col(T)(0)+x.col(T)(1)*x.col(T)(1))));
+
+
   // State and Input Constraints
   for (int k = 0; k < T + 1; k++) {
     z0 = log(m0 - (a * rho2 * (k) * dt));
     mu1 = rho1 * exp(-z0);
     mu2 = rho2 * exp(-z0);
-    socp.addConstraint(greaterThan(q, x.col(T).norm()));
     socp.addConstraint(lessThan(u.col(k).norm(), s(k)));
     socp.addConstraint(lessThan(mu1 * (1.0 - (z(k) - z0)), s(k)));
     socp.addConstraint(lessThan(s(k), mu2 * (1.0 - (z(k) - z0))));
     socp.addConstraint(lessThan(log(m0 - a * rho2 * k * dt), z(k)));
     socp.addConstraint(lessThan(z(k), log(m0 - a * rho1 * k * dt)));
-    if (r0(2,0) >= 200.0){
+    if (r0(2,0) >= 300.0){
       socp.addConstraint(lessThan((par(S) * x.col(k)).norm(), -par(c) * x.col(k)));
     }
     socp.addConstraint(greaterThan(z(k), 0));
@@ -74,7 +76,7 @@ void FixedTOF(const Vector3d &r0, const Vector3d &v0, const double &tof,
   }
 
   // Cost
-  socp.addCostTerm(-z(T) + 100.0 * q);
+  socp.addCostTerm(-z(T) + 0.0001 * q);
 
   // Create and initialize the solver instance.
   ecos::ECOSSolver solver(socp);
