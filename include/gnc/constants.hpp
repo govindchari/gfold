@@ -33,4 +33,6 @@ static constexpr double pointing_max = 25.0 * (M_PI / 180.0);
 namespace position {
 static constexpr double glideslope = 1.0 * (M_PI/180);
 static constexpr double tolerance = 0.5;
+static constexpr double delta = 1.0;    // Landing velocity tolerance
+static constexpr double epsilon = 0.4; // Landing height tolerance
 } // namespace position

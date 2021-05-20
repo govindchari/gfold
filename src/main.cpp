@@ -54,7 +54,5 @@ int main() {
   saveData("u", data.u_sol);
   saveData("z", data.z_sol);
   */
-  
-  
 }
 

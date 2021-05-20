@@ -42,9 +42,11 @@ void FixedTOF(const Vector3d &r0, const Vector3d &v0, const double &tof,
 
   // Initial and Terminal Constraints
   socp.addConstraint(equalTo(x.col(0), par(x0)));
-  socp.addConstraint(lessThan(x.col(T)(2), 0.4));
-  socp.addConstraint(lessThan(sqrt(x.col(T)(3)*x.col(T)(3)+x.col(T)(4)*x.col(T)(4)+x.col(T)(5)*x.col(T)(5)), 1.0));
+  socp.addConstraint(lessThan(x.col(T)(2), position::epsilon));
+  socp.addConstraint(lessThan(sqrt(x.col(T)(3)*x.col(T)(3)+x.col(T)(4)*x.col(T)(4)+x.col(T)(5)*x.col(T)(5)), position::delta));
   socp.addConstraint(equalTo(z(0), log(m0)));
+  socp.addConstraint(greaterThan(z(T), log(massprop::m_dry)));
+
 
 
   // Dynamics
